@@ -36,6 +36,7 @@ stream = p.open(format=pyaudio.paFloat32,
                 channels=2,
                 rate=SAMPLERATE,
                 input=True,
+				input_device_index = device,
                 stream_callback=callbackFunction)
 
 print "Press enter to exit"
