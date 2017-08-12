@@ -4,13 +4,24 @@ import pyaudio
 import wave
 import sys
 import argparse
+import numpy as np
 
 FRAMESIZE = 4096
 SAMPLERATE = 44100
 
+threshold = 0.05
+
 def callbackFunction(in_data, frame_count, time_info, status):
-	return (None, pyaudio.paContinue)
+	data = np.fromstring(in_data, dtype=np.float32)
+	offset = np.ones(data.shape)*threshold
+	crossings = np.where(np.diff(np.sign(data+offset)))[0]
+	flag = pyaudio.paContinue
+	if(len(crossings) > 0):
+		print crossings
+		flag = pyaudio.paComplete
+		print "Found a crossing point"
 	
+	return (None, flag)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-l", "--list", help="list available devices",
