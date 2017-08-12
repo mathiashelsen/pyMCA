@@ -30,10 +30,11 @@ if args.list:
 device = 0
 if args.device:
 	device = args.device
+	print p.get_device_info_by_index(device)
 
-
+print device
 stream = p.open(format=pyaudio.paFloat32,
-                channels=2,
+                channels=1,
                 rate=SAMPLERATE,
                 input=True,
 				input_device_index = device,
