@@ -19,6 +19,7 @@ def callbackFunction(in_data, frame_count, time_info, status):
 	if(len(crossings) > 0):
 		print crossings
 		flag = pyaudio.paComplete
+		np.savetxt("crossing.dat", data)
 		print "Found a crossing point"
 	
 	return (None, flag)
